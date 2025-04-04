@@ -21,17 +21,18 @@ public class Main {
         long minorsCount = persons.stream().filter(x -> x.getAge() < 18).count();
         System.out.printf("Minorscount %d", minorsCount);
         List<String> conscriptList = persons.stream().filter(x -> x.getSex().equals(Sex.MAN))
-                .filter(x -> x.getAge() >= 18).map(x -> x.getName() + " " + x.getFamily())
+                .filter(person -> person.getSex() == Sex.MAN && person.getAge() >= 18 && person.getAge() <= 27)
+                .map(Person::getFamily)
                 .collect(Collectors.toList());
         System.out.println("\nconscriptList:");
         System.out.println(conscriptList.size());
         System.out.println(conscriptList.get(0));
 
-        List<String> potentialWorkersList = persons.stream()
-                .filter(x -> x.getAge() >= 18)
-                .filter(x -> x.getEducation().equals(Education.HIGHER))
+        List<Person> potentialWorkersList = persons.stream()
+                .filter(person -> (person.getSex() == Sex.WOMAN && person.getAge() >= 18 && person.getAge() <= 60) ||
+                        (person.getSex() == Sex.MAN && person.getAge() >= 18 && person.getAge() <= 65))
+                .filter(person -> person.getEducation() == Education.HIGHER)
                 .sorted(Comparator.comparing(Person::getFamily))
-                .map(x -> x.getName() + " " + x.getFamily())
                 .collect(Collectors.toList());
         System.out.println("\npotentialWorkersList:");
         System.out.println(potentialWorkersList.size());

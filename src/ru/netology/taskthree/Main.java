@@ -43,7 +43,9 @@ public class Main {
         Collections.sort(evenNumbers);
 
         // 4. Выводим результат
-        System.out.println(evenNumbers); // [2, 4, 8, 16, 32]
+        for (int num : evenNumbers) {
+            System.out.print(num + " ");
+        }
 
     }
 }
